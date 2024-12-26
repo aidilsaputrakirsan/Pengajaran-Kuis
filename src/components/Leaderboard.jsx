@@ -1,11 +1,11 @@
-// src/components/Leaderboard.jsx
+// Leaderboard.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Leaderboard = ({ selectedMK }) => {
   const [topParticipants, setTopParticipants] = useState([]);
-  const API_URL = 'https://script.google.com/macros/s/YOUR_GOOGLE_APPS_SCRIPT_API_URL/exec';
-  const API_KEY = 'YOUR_SECURE_API_KEY';
+  const API_URL = import.meta.env.VITE_API_URL;
+  const API_KEY = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
@@ -25,7 +25,7 @@ const Leaderboard = ({ selectedMK }) => {
     };
 
     fetchLeaderboard();
-  }, [selectedMK]);
+  }, [selectedMK, API_URL, API_KEY]);
 
   return (
     <div className="mt-8">

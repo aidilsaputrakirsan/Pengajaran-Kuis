@@ -1,4 +1,4 @@
-// src/components/QuizForm.jsx
+// QuizForm.jsx
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { QuizContext } from '../context/QuizContext';
@@ -8,19 +8,20 @@ const QuizForm = ({ testType, selectedMK }) => {
   const { user, setPreTestScore, setPostTestScore } = useContext(QuizContext);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
-  const [timeTaken, setTimeTaken] = useState(''); // Implementasi waktu pengerjaan
+  const [timeTaken, setTimeTaken] = useState('');
   const [startTime, setStartTime] = useState(null);
   const [timer, setTimer] = useState(600); // 10 menit dalam detik
   const navigate = useNavigate();
 
-  const API_URL = 'https://script.google.com/macros/s/YOUR_GOOGLE_APPS_SCRIPT_API_URL/exec';
-  const API_KEY = 'YOUR_SECURE_API_KEY';
+  const API_URL = import.meta.env.VITE_API_URL;
+  const API_KEY = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
         const response = await axios.get(API_URL, {
           params: {
+            action: 'getQuestions',
             mk: selectedMK,
             test: testType,
             apiKey: API_KEY
@@ -35,7 +36,7 @@ const QuizForm = ({ testType, selectedMK }) => {
     };
 
     fetchQuestions();
-  }, [selectedMK, testType]);
+  }, [selectedMK, testType, API_URL, API_KEY]);
 
   useEffect(() => {
     if (timer <= 0) {
@@ -83,16 +84,17 @@ const QuizForm = ({ testType, selectedMK }) => {
     const resultData = {
       participantId: user.id,
       name: user.name,
-      mk: selectedMK,
-      testType: testType,
+      testType: testType === 'pre' ? 'Pre-test' : 'Post-test', // 'Pre-test' atau 'Post-test'
       score: score,
       timeTaken: `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`,
       apiKey: API_KEY
     };
 
+    console.log('Sending quiz result:', resultData); // Logging data
+
     try {
       const response = await axios.post(API_URL, resultData);
-      console.log('Hasil kuis berhasil dikirim:', response.data);
+      console.log('Hasil kuis berhasil dikirim:', response.data); // Logging respons
       navigate(`/summary?mk=${encodeURIComponent(selectedMK)}`);
     } catch (error) {
       console.error('Error mengirim hasil kuis:', error);

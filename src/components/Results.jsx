@@ -1,13 +1,21 @@
-// src/components/Results.jsx
-import React, { useContext, useEffect, useState } from 'react';
-import { QuizContext } from '../context/QuizContext';
+// Results.jsx
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
-const Results = ({ selectedMK }) => {
-  const { user } = useContext(QuizContext);
+const Results = () => {
   const [results, setResults] = useState({ preTestScore: 0, postTestScore: 0 });
-  const API_URL = 'https://script.google.com/macros/s/YOUR_GOOGLE_APPS_SCRIPT_API_URL/exec';
-  const API_KEY = 'YOUR_SECURE_API_KEY';
+  const [name, setName] = useState('');
+  const [selectedMK, setSelectedMK] = useState('');
+  const location = useLocation();
+
+  // Mendapatkan query params
+  const query = new URLSearchParams(location.search);
+  const participantId = query.get('id'); // Pastikan Anda menambahkan query param 'id' saat navigasi
+  const mk = query.get('mk');
+
+  const API_URL = import.meta.env.VITE_API_URL;
+  const API_KEY = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -15,28 +23,30 @@ const Results = ({ selectedMK }) => {
         const response = await axios.get(API_URL, {
           params: {
             action: 'getResults',
-            participantId: user.id,
-            mk: selectedMK,
+            participantId: participantId,
+            mk: mk,
             apiKey: API_KEY
           }
         });
         setResults(response.data);
       } catch (error) {
         console.error('Error fetching results:', error);
-        alert('Terjadi kesalahan saat mengambil hasil kuis.');
+        alert('Terjadi kesalahan saat mengambil hasil.');
       }
     };
 
-    fetchResults();
-  }, [selectedMK, user.id]);
+    if (participantId && mk) {
+      fetchResults();
+    }
+  }, [participantId, mk, API_URL, API_KEY]);
 
   return (
-    <div className="mt-8">
-      <h2 className="text-xl font-semibold mb-4">Hasil Kuis</h2>
-      <p><strong>Nama:</strong> {user.name}</p>
-      <p><strong>Pre-test Skor:</strong> {results.preTestScore}</p>
-      <p><strong>Post-test Skor:</strong> {results.postTestScore}</p>
-      <p><strong>Total Benar:</strong> {results.preTestScore + results.postTestScore}</p>
+    <div className="max-w-md mx-auto mt-8 p-4 border rounded">
+      <h2 className="text-2xl font-semibold mb-4">Hasil Kuis Anda</h2>
+      <p className="mb-2"><strong>Nama:</strong> {name}</p>
+      <p className="mb-2"><strong>MK:</strong> {mk}</p>
+      <p className="mb-2"><strong>Pre-test Score:</strong> {results.preTestScore}</p>
+      <p className="mb-2"><strong>Post-test Score:</strong> {results.postTestScore}</p>
     </div>
   );
 };

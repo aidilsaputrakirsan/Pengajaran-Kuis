@@ -1,4 +1,4 @@
-// src/pages/Register.jsx
+// Register.jsx
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QuizContext } from '../context/QuizContext';
@@ -9,11 +9,48 @@ const Register = () => {
   const { setUser } = useContext(QuizContext);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const participantId = uuidv4();
-    setUser({ id: participantId, name });
-    navigate('/');
+    const userData = { id: participantId, name };
+    setUser(userData);
+
+    // Kirim data ke API
+    const API_URL = import.meta.env.VITE_API_URL;
+    const API_KEY = import.meta.env.VITE_API_KEY;
+
+    const dataToSend = {
+      participantId: participantId,
+      name: name,
+      testType: 'register', // Jenis test 'register'
+      score: 0,
+      timeTaken: '0:00',
+      apiKey: API_KEY
+    };
+
+    console.log('Sending data:', dataToSend); // Logging data
+
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+      });
+
+      const result = await response.json();
+      console.log('Response:', result); // Logging respons
+
+      if (result.status === 'success') {
+        navigate('/'); // Navigasi ke halaman Home setelah berhasil
+      } else {
+        alert('Gagal mendaftar. Silakan coba lagi.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Terjadi kesalahan saat mendaftar.');
+    }
   };
 
   return (

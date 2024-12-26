@@ -5,6 +5,7 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
+  base: '/Pengajaran-Kuis/', // Sesuaikan dengan nama repository Anda
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

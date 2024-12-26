@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Home = () => {
   // Daftar MK yang tersedia
-  const availableMK = ['Matematika', 'Fisika', 'Kimia']; // Tambahkan MK sesuai kebutuhan
+  const availableMK = ['Matematika Diskrit', 'Pemrograman Web', 'Komputasi Awan']; // Tambahkan MK sesuai kebutuhan
 
   return (
     <div className="text-center">
