@@ -1,16 +1,13 @@
-// src/main.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import './index.css';
+import App from './App'; // Pastikan file App.jsx ada di src
+import './index.css'; // Pastikan file CSS ini ada
 import { BrowserRouter } from 'react-router-dom';
-
-const basename = import.meta.env.PROD ? '/Pengajaran-Kuis' : '/';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter basename={basename}>
+    <BrowserRouter>
       <App />
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
