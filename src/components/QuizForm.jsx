@@ -94,7 +94,7 @@ const QuizForm = ({ testType, selectedMK }) => {
       if (response.data.status === 'success') {
         alert(`Kuis selesai! Skor: ${response.data.score}`);
         // IMPORTANT: Tambahkan '/Pengajaran-Kuis' agar valid di GH Pages
-        window.location.href = `/Pengajaran-Kuis/leaderboard?mk=${encodeURIComponent(selectedMK)}`;
+        window.location.href = `/leaderboard?mk=${encodeURIComponent(selectedMK)}`;
       } else {
         alert('Gagal menyimpan jawaban. Silakan coba lagi.');
       }
