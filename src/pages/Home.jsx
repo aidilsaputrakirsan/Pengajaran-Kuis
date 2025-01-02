@@ -1,10 +1,8 @@
-// src/pages/Home.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
-  // Daftar MK yang tersedia
-  const availableMK = ['Matematika Diskrit', 'Pemrograman Web', 'Komputasi Awan']; // Tambahkan MK sesuai kebutuhan
+  const availableMK = ['Matematika Diskrit', 'Pemrograman Web', 'Komputasi Awan']
 
   return (
     <div className="text-center">
@@ -27,7 +25,7 @@ const Home = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

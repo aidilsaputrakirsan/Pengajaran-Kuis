@@ -1,16 +1,19 @@
-// src/pages/Summary.jsx
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import Results from '../components/Results';
-import Leaderboard from '../components/Leaderboard';
+import React from 'react'
+import { useLocation, Link } from 'react-router-dom'
+import Results from '../components/Results'
+import Leaderboard from '../components/Leaderboard'
 
 const Summary = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const mk = queryParams.get('mk');
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
+  const mk = queryParams.get('mk')
 
   if (!mk) {
-    return <p className="text-center">MK tidak dipilih. Kembali ke <Link to="/">Home</Link>.</p>;
+    return (
+      <p className="text-center">
+        MK tidak dipilih. Kembali ke <Link to="/">Home</Link>.
+      </p>
+    )
   }
 
   return (
@@ -19,7 +22,7 @@ const Summary = () => {
       <Results selectedMK={mk} />
       <Leaderboard selectedMK={mk} />
     </div>
-  );
-};
+  )
+}
 
-export default Summary;
+export default Summary
