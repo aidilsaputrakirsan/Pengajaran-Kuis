@@ -1,14 +1,14 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import Home from './pages/Home'
-import Register from './pages/Register'
-import PreTest from './pages/PreTest'
-import PostTest from './pages/PostTest'
-import Summary from './pages/Summary'
-import Leaderboard from './components/Leaderboard'
-import QuizProvider from './context/QuizContext'
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Register from './pages/Register';
+import PreTest from './pages/PreTest';
+import PostTest from './pages/PostTest';
+import Summary from './pages/Summary';
+import Leaderboard from './components/Leaderboard';
+import QuizProvider from './context/QuizContext';
 
 function App() {
   return (
@@ -23,12 +23,13 @@ function App() {
             <Route path="/post-test" element={<PostTest />} />
             <Route path="/summary" element={<Summary />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="*" element={<p>Halaman tidak ditemukan</p>} />
           </Routes>
         </main>
         <Footer />
       </div>
     </QuizProvider>
-  )
+  );
 }
 
-export default App
+export default App;
